@@ -22,6 +22,14 @@ const routes = [
         path: "/setting",
         component: "@/pages/setting/index",
       },
+      {
+        path: "/dataSync",
+        component: "@/pages/data/dataSync/index",
+      },
+      {
+        path: "/matchInfo",
+        component: "@/pages/home/dataDetail/index",
+      },
     ],
   },
 

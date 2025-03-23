@@ -1,15 +1,11 @@
-import { Menu, Breadcrumb } from "antd";
+import { Menu } from "antd";
 import { Link } from "umi";
 import {
   SettingOutlined,
   BarChartOutlined,
   BankOutlined,
-  TeamOutlined,
-  DownOutlined,
-  UpOutlined,
-  HomeOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
+import routes from "config/routes";
 
 interface Iprpos {
   addBreadcrumbRoutes: (href: string, title: JSX.Element) => void;
@@ -23,13 +19,14 @@ const Side = ({ addBreadcrumbRoutes }: Iprpos) => {
       icon: <BankOutlined />,
       children: [
         { name: "主页", router: "/home" },
-        { name: "数据概览", router: "/option-2" },
+        { name: "比赛信息", router: "/matchInfo" },
       ],
     },
     {
       name: "数据概览",
-      router: "/navigation-two",
+      router: "/",
       icon: <BarChartOutlined />,
+      children: [{ name: "数据同步", router: "/dataSync" }],
     },
     {
       name: "设置",
