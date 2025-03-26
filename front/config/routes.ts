@@ -16,7 +16,7 @@ const routes = [
     routes: [
       {
         path: "/home",
-        component: "@/pages/home/index",
+        component: "@/pages/home/home/index",
       },
       {
         path: "/setting",

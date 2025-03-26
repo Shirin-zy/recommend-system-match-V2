@@ -1,45 +1,72 @@
 import React, { useEffect, useState } from "react";
-import { fetchContestLists } from "./service"; // 引入 fetchContestLists 函数
+import getMatchInfo from "@/service/getMatchInfo";
+import style from "./index.less";
+import Table from "./components/Table";
+import type { PaginationProps } from "antd";
+import Filter from "./components/Filter";
 
-const dataSync = () => {
-  const [contestData, setContestData] = useState<any[]>([]); // 用于存储比赛数据
+const MatchInfo = () => {
+  const [matchData, setMatchData] = useState<any[]>([]); // 用于存储比赛数据
   const [loading, setLoading] = useState<boolean>(true); // 加载状态
+  const [total, setTotal] = useState<number>(0);
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+  });
 
   useEffect(() => {
-    const loadContestData = async () => {
+    const fetchData = async () => {
       try {
-        const data = await fetchContestLists(2, 10); // 调用函数，传入参数
-        setContestData(data); // 设置比赛数据
+        const data = await getMatchInfo(
+          pagination.pageSize,
+          pagination.current
+        ); // 等待获取数据
+        setMatchData(data.data.list); // 更新状态
+        setTotal(data.data.total);
       } catch (error) {
-        console.error("加载比赛数据失败:", error);
+        console.error("获取比赛数据时出错:", error);
       } finally {
-        setLoading(false); // 设置加载状态为 false
+        setLoading(false); // 无论成功与否，加载状态都要结束
       }
     };
 
-    loadContestData(); // 调用加载数据的函数
-  }, []); // 组件挂载时调用
-  console.log("data:", contestData);
+    fetchData();
+  }, [pagination]);
+
+  // 分页变化
+  const onShowSizeChange: PaginationProps["onShowSizeChange"] = (
+    current,
+    pageSize
+  ) => {
+    setPagination({ current, pageSize });
+  };
+
+  // 当前页改变
+  const onChange: PaginationProps["onChange"] = (page, pageSize) => {
+    setPagination({ current: page, pageSize });
+  };
+
   return (
     <>
-      <h1>竞赛数据</h1>
-      {loading ? (
-        <div>加载中...</div> // 显示加载状态
-      ) : (
-        <div>
-          {contestData?.length > 0 ? (
-            <ul>
-              {contestData.map((contest) => (
-                <li key={contest.contest_id}>{contest.contest_name}</li> // 显示比赛名称
-              ))}
-            </ul>
-          ) : (
-            <div>没有比赛数据</div> // 没有数据时的提示
-          )}
+      <div className={style.content}>
+        <div className={style.side}>
+          <div>
+            <Filter />
+          </div>
         </div>
-      )}
+        <div className={style.table}>
+          <div>
+            <Table
+              matchInfo={matchData}
+              total={total}
+              onChange={onChange}
+              onShowSizeChange={onShowSizeChange}
+            />
+          </div>
+        </div>
+      </div>
     </>
   );
 };
 
-export default dataSync;
+export default MatchInfo;

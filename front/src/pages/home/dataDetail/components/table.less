@@ -1,0 +1,141 @@
+.item {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
+  height: 160px;
+  .left {
+    flex: 1;
+    margin-right: 10px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .pic {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      padding: 20px 10px 20px 20px;
+      align-items: center;
+      border-radius: 10px;
+
+      div {
+        flex: 3;
+        color: #ffffff;
+        height: 75px;
+        overflow: hidden;
+        font-size: 18px;
+        font-weight: 500;
+        font-family:
+          "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+        display: -webkit-box; /* 改变显示模式 */
+        -webkit-box-orient: vertical; /* 设置垂直布局 */
+        -webkit-line-clamp: 3; /* 设置最大行数 */
+        overflow: hidden; /* 超出部分隐藏 */
+        text-overflow: ellipsis; /* 溢出显示省略号 */
+      }
+      span {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        flex: 2;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0.5;
+      }
+    }
+  }
+  .middle {
+    overflow-y: hidden;
+    flex: 2;
+    margin: 0 10px;
+    span {
+      display: block;
+      color: #a2a2a2;
+      height: 25px;
+      line-height: 25px;
+      font-size: 14px;
+      span {
+        color: #a2a2a2;
+        display: inline;
+        &:nth-child(1) {
+          margin-right: 20px;
+        }
+      }
+    }
+  }
+  .right {
+    flex: 1;
+    margin-left: 10px;
+    .register {
+      text-align: right;
+      display: block;
+      font-weight: 400px;
+      font-size: 20px;
+      color: #03b349;
+      text-shadow:
+        0 0 4px rgba(3, 179, 73, 0.3),
+        0 0 8px rgba(3, 179, 73, 0.5),
+        0 0 12px rgba(3, 179, 73, 0.6),
+        0 0 16px rgba(3, 179, 73, 0.7),
+        0 0 20px rgba(3, 179, 73, 0.6),
+        0 0 30px rgba(3, 179, 73, 1);
+    }
+    .underway {
+      text-align: right;
+      display: block;
+      font-weight: 400px;
+      font-size: 20px;
+      color: #ff6a52;
+      text-shadow:
+        0 0 4px rgba(255, 106, 82, 0.3),
+        0 0 8px rgba(255, 106, 82, 0.5),
+        0 0 12px rgba(255, 106, 82, 0.6),
+        0 0 16px rgba(255, 106, 82, 0.7),
+        0 0 20px rgba(255, 106, 82, 0.6),
+        0 0 30px rgba(255, 106, 82, 1);
+    }
+    .end {
+      text-align: right;
+      display: block;
+      font-weight: 400px;
+      font-size: 20px;
+      color: #7a7f84;
+      text-shadow:
+        0 0 4px rgba(122, 127, 132, 0.3),
+        0 0 8px rgba(122, 127, 132, 0.5),
+        0 0 12px rgba(122, 127, 132, 0.6),
+        0 0 16px rgba(122, 127, 132, 0.7),
+        0 0 20px rgba(122, 127, 132, 0.6),
+        0 0 30px rgba(122, 127, 132, 1);
+    }
+    .time {
+      text-align: right;
+      display: block;
+      font-size: 14px;
+      color: #a2a2a2;
+      margin-top: 10px;
+      span {
+        &:nth-child(2) {
+          color: #22bfa7;
+          margin: 0 5px;
+          font-size: 16px;
+          font-weight: 700px;
+        }
+      }
+    }
+  }
+}
+hr {
+  //   border: 0.5px solid #a2a2a2; /* 设置边框宽度、样式和颜色 */
+  border: none;
+  height: 0.5px;
+  background-color: #ecedf3;
+  margin-top: 20px;
+}

@@ -2,15 +2,6 @@ from sqlalchemy import create_engine, text
 
 
 def fetch_paginated_data(limit, page):
-    """
-    根据提供的limit和page参数从matchInfo表中分页获取数据。
-
-    :param limit: 每页要获取的记录数
-    :param page: 当前页码（从1开始）
-    :param engine: SQLAlchemy引擎对象，用于连接数据库
-    :return: 查询结果列表
-    """
-
     engine = create_engine('mysql+pymysql://root:zy15730850419@localhost/match_recommend_system')  # 替换为你的数据库连接字符串
     offset = (page - 1) * limit
 
@@ -18,22 +9,32 @@ def fetch_paginated_data(limit, page):
         "code": 200,
         "msg": "",
         "data": {
-            "list": []
+            "list": [],
+            "total": 0  # 新增：用于存储总记录数
         }
     }
 
     # SQL查询语句，使用LIMIT和OFFSET进行分页
-    query = text("""
+    query_paginate = text("""
         SELECT * FROM matchInfo
         LIMIT :limit OFFSET :offset
     """)
 
+    # 获取总记录数的SQL查询
+    query_count = text("""
+        SELECT COUNT(*) AS total FROM matchInfo
+    """)
+
     with engine.connect() as connection:
-        result = connection.execute(query, {"limit": limit, "offset": offset})
-        rows = result.fetchall()
+        # 执行分页查询
+        result_paginate = connection.execute(query_paginate, {"limit": limit, "offset": offset})
+        rows = result_paginate.fetchall()
+
+        # 执行计数查询
+        result_count = connection.execute(query_count)
+        total_records = result_count.fetchone()[0]
 
     for row in rows:
-        # 解包每一行的数据
         _, contest_id, contest_name, contest_url, is_exam, is_contest_status, \
         regist_start_time, regist_end_time, contest_start_time, contest_end_time, \
         thumb_pic, level_name, organiser, organiser_name, enter_range, \
@@ -66,9 +67,9 @@ def fetch_paginated_data(limit, page):
             "module": module
         }
 
-        # 将记录添加到列表中
         data["data"]["list"].append(record)
 
+    # 将总记录数添加到返回的数据结构中
+    data["data"]["total"] = total_records
+
     return data
-
-
