@@ -1,13 +1,51 @@
 .filter {
-  padding: 20px;
+  padding: 0px 20px 20px 20px;
   .category {
     h3 {
       color: #333333;
+      margin-top: 20px;
     }
     div {
       h5 {
         color: #333333;
       }
+    }
+  }
+}
+
+.category_box {
+  .title {
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  .gridContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    .checkbox {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.box {
+  margin-top: 20px;
+  .layout {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    .selectedButtonStyle {
+      border: none;
+      margin: 5px;
+      background-color: #3b82f6;
+      color: white;
+    }
+    .unselectedButtonStyle {
+      border: none;
+      margin: 5px;
+      background-color: #f5f6fa;
+      color: #606266;
     }
   }
 }

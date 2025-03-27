@@ -1,11 +1,20 @@
 import axiosInstance from "@/utlis/axios";
 
-const getMatchInfo = async (limit: number, page: number) => {
+const getMatchInfo = async (
+  limit: number, // 每页条数
+  page: number, // 页码
+  ids?: string, // 类别
+  level?: number, // 等级
+  sort?: number // 排序方式
+) => {
   try {
     const response = await axiosInstance.get("/api/getMatchInfo", {
       params: {
         limit: limit,
         page: page,
+        class_id: ids,
+        level: level,
+        sort: sort,
       },
     });
     return response.data; // 返回请求得到的数据

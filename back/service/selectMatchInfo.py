@@ -1,7 +1,6 @@
 from sqlalchemy import create_engine, text
 
-
-def fetch_paginated_data(limit, page):
+def fetch_paginated_data(limit, page, class_id, level, sort):
     engine = create_engine('mysql+pymysql://root:zy15730850419@localhost/match_recommend_system')  # 替换为你的数据库连接字符串
     offset = (page - 1) * limit
 
@@ -14,15 +13,24 @@ def fetch_paginated_data(limit, page):
         }
     }
 
-    # SQL查询语句，使用LIMIT和OFFSET进行分页
-    query_paginate = text("""
+    # 动态构建WHERE子句
+    where_clause = ""
+    if len(class_id.strip()) > 0:
+        ids = class_id.split('|')
+        conditions = [f"contest_class_second_id = {id}" for id in ids]
+        where_clause = "WHERE " + " OR ".join(conditions)
+
+    # SQL查询语句，使用LIMIT和OFFSET进行分页，并添加WHERE条件
+    query_paginate = text(f"""
         SELECT * FROM matchInfo
+        {where_clause}
         LIMIT :limit OFFSET :offset
     """)
 
-    # 获取总记录数的SQL查询
-    query_count = text("""
+    # 获取总记录数的SQL查询，并添加WHERE条件
+    query_count = text(f"""
         SELECT COUNT(*) AS total FROM matchInfo
+        {where_clause}
     """)
 
     with engine.connect() as connection:

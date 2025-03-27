@@ -61,10 +61,14 @@ def sync_match_info():
 @app.route('/api/getMatchInfo',methods=['GET'])
 def get_match_info ():
     # 从URL参数中获取limit和page，设置默认值为10和1
-    limit = request.args.get('limit', default=10, type=int)
-    page = request.args.get('page', default=1, type=int)
+    limit = request.args.get('limit', default=10, type=int) # 每页条数
+    page = request.args.get('page', default=1, type=int) # 页码
+    class_id = request.args.get('class_id',default='',type=str) # 类别
+    level = request.args.get('level',default=0,type=int) # 级别
+    sort = request.args.get('sort', default=0, type=int) # 排序
+    print(f'limit: {limit}\npage: {page}\nclass_id: {class_id}\nlevel: {level}\nsort: {sort}')
     try:
-        data = fetch_paginated_data(limit=limit,page=page)
+        data = fetch_paginated_data(limit=limit,page=page,class_id=class_id,level=level,sort=sort)
         return jsonify(data)
     except Exception as e:
         return jsonify(structured_data = {
