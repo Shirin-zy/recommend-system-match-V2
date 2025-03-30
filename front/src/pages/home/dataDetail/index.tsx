@@ -16,7 +16,7 @@ const MatchInfo = () => {
   }); // 分页信息
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]); // 比赛类型筛选列表
   const [selectLevel, setSelectLevel] = useState<number>(0); // 比赛级别
-  const [selectSort, setSelectSort] = useState<number>(0); // 排序方式
+  const [selectSort, setSelectSort] = useState<number>(); // 排序方式
 
   useEffect(() => {
     const fetchData = async () => {

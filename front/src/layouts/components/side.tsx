@@ -35,6 +35,7 @@ const Side = ({ addBreadcrumbRoutes }: Iprpos) => {
       children: [
         { name: "设置", router: "/setting" },
         { name: "登录", router: "/login" },
+        { name: "系统管理", router: "/system" },
       ],
     },
   ];

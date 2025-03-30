@@ -7,6 +7,7 @@ import { App, AppStore } from "@/stores/app";
 import Side from "./components/side";
 import MyBreadcrumb from "./components/breadcrumb";
 import { Button } from "antd";
+import "../global.less";
 
 const Layout = observer(() => {
   const [showUserInfo, setShowUserInfo] = useState<boolean>(false);

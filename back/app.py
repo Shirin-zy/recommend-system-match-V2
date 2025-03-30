@@ -10,6 +10,8 @@ import  requests
 import warnings
 from service.getMatchInfo import fetch_contest_lists
 from service.selectMatchInfo import fetch_paginated_data
+from  dealData.addID import addId
+from dealData.insertMatchInfoToDatabase import store_data_to_mysql
 import os
 warnings.filterwarnings('ignore')
 app = Flask(__name__)
@@ -20,12 +22,11 @@ CORS(app)
 def sync_match_info():
     matchInfo = []
     file_counter = 1  # 文件计数器
-    batch_size = 100  # 每100页保存一次数据
-    current_page = 0  # 当前处理的页码
+    output_dir = './data/'
 
     try:
         # 循环请求第1页到第826页的数据
-        for page in range(1, 827):
+        for page in range(1, 11):
             current_page = page
             res = fetch_contest_lists(page=page, limit=10)
             matchInfo.extend(res)  # 将每页的数据添加到总列表中
@@ -33,17 +34,25 @@ def sync_match_info():
             if page % 10 == 0:
                 print(f'已完成{page}页')
 
-            # 每100页保存一次数据
-            if page % batch_size == 0 or page == 826:
-                df = pd.DataFrame(matchInfo)
-                output_dir = './data'
-                if not os.path.exists(output_dir):
-                    os.makedirs(output_dir)
-                output_file = os.path.join(output_dir, f'matchInfo{file_counter}.csv')
-                df.to_csv(output_file, index=False, encoding='utf-8-sig')
-                print(f"数据已成功保存到 {output_file}")
-                matchInfo.clear()  # 清空列表以便开始新的批次
-                file_counter += 1
+        df = pd.DataFrame(matchInfo)
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+        # 重命名rank列
+        df.columns = [
+            "ranking" if col == "rank" else col
+            for col in df.columns
+        ]
+        df.to_csv(f'{output_dir}data.csv', index=False, encoding='utf-8-sig')
+        print(f"数据已成功保存到{output_dir}data.csv")
+
+        # 读取写入的数据
+        data = pd.read_csv('./data/data.csv')
+        # 添加ID字段后写回
+        addId(data=data,savePath='./data/')
+        # 读取拥有ID的数据集
+        data = pd.read_csv('./data/data_with_id.csv')
+        # 　写入数据库
+        store_data_to_mysql(data)
 
         responses = {
             'data': [{'code': 200, 'result': 'succeed'}]
@@ -65,8 +74,7 @@ def get_match_info ():
     page = request.args.get('page', default=1, type=int) # 页码
     class_id = request.args.get('class_id',default='',type=str) # 类别
     level = request.args.get('level',default=0,type=int) # 级别
-    sort = request.args.get('sort', default=0, type=int) # 排序
-    print(f'limit: {limit}\npage: {page}\nclass_id: {class_id}\nlevel: {level}\nsort: {sort}')
+    sort = request.args.get('sort', default=None, type=int) # 排序
     try:
         data = fetch_paginated_data(limit=limit,page=page,class_id=class_id,level=level,sort=sort)
         return jsonify(data)

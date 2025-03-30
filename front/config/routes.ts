@@ -2,7 +2,7 @@ const routes = [
   // 不需要布局的路由
   {
     path: "/login",
-    component: "@/pages/login/index",
+    component: "@/pages/setting/login/index",
   },
   {
     path: "/404",
@@ -20,7 +20,11 @@ const routes = [
       },
       {
         path: "/setting",
-        component: "@/pages/setting/index",
+        component: "@/pages/setting/setting/index",
+      },
+      {
+        path: "/system",
+        component: "@/pages/setting/system/index",
       },
       {
         path: "/dataSync",

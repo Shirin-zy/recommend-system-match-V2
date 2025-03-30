@@ -1,7 +1,7 @@
+#　读取data下的csv文件块合并并重新输出到data
 import pandas as pd
 import os
 
-#　读取data下的csv文件块合并并重新输出到data
 def merge_csv_files(input_dir, output_file):
     # 获取目录下所有的CSV文件
     csv_files = [f for f in os.listdir(input_dir) if f.startswith('matchInfo') and f.endswith('.csv')]

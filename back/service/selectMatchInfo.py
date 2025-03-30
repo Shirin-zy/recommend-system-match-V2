@@ -14,24 +14,50 @@ def fetch_paginated_data(limit, page, class_id, level, sort):
     }
 
     # 动态构建WHERE子句
-    where_clause = ""
+    where_clauses = []
     if len(class_id.strip()) > 0:
         ids = class_id.split('|')
         conditions = [f"contest_class_second_id = {id}" for id in ids]
-        where_clause = "WHERE " + " OR ".join(conditions)
+        where_clauses.append(" OR ".join(conditions))
 
-    # SQL查询语句，使用LIMIT和OFFSET进行分页，并添加WHERE条件
+    # 根据level参数构建额外的WHERE条件
+    level_mapping = {
+        0: "",  # 不限
+        1: "校级",
+        2: "市级",
+        3: "省级",
+        4: "全国性",
+        5: "全球性",
+        6: "自由",
+        7: "其它"
+    }
+    if level in level_mapping and level != 0:  # 如果level不是"不限"
+        where_clauses.append(f"level_name = '{level_mapping[level]}'")
+
+    where_clause = "WHERE " + " AND ".join(where_clauses) if where_clauses else ""
+
+    # 根据sort参数构建ORDER BY子句
+    order_by_clause = ""
+    if sort == 0:
+        order_by_clause = "ORDER BY regist_start_time DESC"
+    elif sort == 1:
+        order_by_clause = "ORDER BY contest_start_time DESC"
+    elif sort ==2:
+        order_by_clause = 'ORDER BY ID ASC'
+
+    # SQL查询语句，使用LIMIT和OFFSET进行分页，并添加WHERE条件和ORDER BY条件
     query_paginate = text(f"""
-        SELECT * FROM matchInfo
-        {where_clause}
-        LIMIT :limit OFFSET :offset
-    """)
+            SELECT * FROM matchInfo
+            {where_clause}
+            {order_by_clause}
+            LIMIT :limit OFFSET :offset
+        """)
 
-    # 获取总记录数的SQL查询，并添加WHERE条件
+    # 获取总记录数的SQL查询，并添加WHERE条件（注意这里不需要ORDER BY）
     query_count = text(f"""
-        SELECT COUNT(*) AS total FROM matchInfo
-        {where_clause}
-    """)
+            SELECT COUNT(*) AS total FROM matchInfo
+            {where_clause}
+        """)
 
     with engine.connect() as connection:
         # 执行分页查询
