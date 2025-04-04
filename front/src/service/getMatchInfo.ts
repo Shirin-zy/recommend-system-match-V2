@@ -1,4 +1,4 @@
-import axiosInstance from "@/utlis/axios";
+import {axiosInstance} from "@/utlis/axios";
 
 const getMatchInfo = async (
   limit: number, // 每页条数

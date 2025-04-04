@@ -23,3 +23,10 @@ CREATE TABLE IF NOT EXISTS matchInfo (
     is_new TINYINT, -- 是否新赛事
     module INT -- 模块
 );
+
+CREATE TABLE  IF NOT  EXISTS userCount (
+    email VARCHAR(255) PRIMARY KEY, -- 邮箱
+    password VARCHAR(20), -- 密码
+    username VARCHAR(20), -- 用户名
+    role VARCHAR(20) -- 角色
+);

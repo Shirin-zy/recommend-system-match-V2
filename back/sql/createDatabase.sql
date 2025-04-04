@@ -1,6 +1,7 @@
--- CREATE DATABASE IF NOT EXISTS match_recommend_system;
--- USE match_recommend_system;
+CREATE DATABASE IF NOT EXISTS match_recommend_system;
+USE match_recommend_system;
 
+-- 插入单条模拟数据
 INSERT INTO matchInfo (
     contest_id, contest_name, contest_url, is_exam, is_contest_status,
     regist_start_time, regist_end_time, contest_start_time, contest_end_time,

@@ -12,6 +12,7 @@ from service.getMatchInfo import fetch_contest_lists
 from service.selectMatchInfo import fetch_paginated_data
 from  dealData.addID import addId
 from dealData.insertMatchInfoToDatabase import store_data_to_mysql
+from service.uerCountService import handle_login,handle_register
 import os
 warnings.filterwarnings('ignore')
 app = Flask(__name__)
@@ -66,7 +67,7 @@ def sync_match_info():
         }
         return jsonify(responses), 500
 
-
+# 按照类型，级别进行筛选比赛以及排序
 @app.route('/api/getMatchInfo',methods=['GET'])
 def get_match_info ():
     # 从URL参数中获取limit和page，设置默认值为10和1
@@ -83,5 +84,21 @@ def get_match_info ():
         "code": 200,
         "msg": str(e),
     })
+
+# 登录接口
+@app.route('/api/login',methods=['post'])
+def login():
+    email = request.json.get('email')
+    password = request.json.get('password')
+    return handle_login(email, password)
+
+# 注册接口
+@app.route('/api/register',methods=['post'])
+def register():
+    email = request.json.get('email')
+    password = request.json.get('password')
+    username = request.json.get('username')
+    return  handle_register(username,password,email)
+
 if __name__ == '__main__':
     app.run(debug=True,port=8444)

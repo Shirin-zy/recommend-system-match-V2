@@ -13,8 +13,10 @@
     "antd": "5",
     "axios": "^1.8.3",
     "file-saver": "^2.0.5",
+    "jwt-decode": "^4.0.0",
     "mobx": "^6.13.6",
     "mobx-react": "^9.2.0",
+    "mobx-react-lite": "^4.1.0",
     "umi": "^4.4.6"
   },
   "devDependencies": {

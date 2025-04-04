@@ -1,4 +1,4 @@
-import axiosInstance from "@/utlis/axios";
+import {axiosInstance} from "@/utlis/axios";
 
 const InitSystem = async () => {
   try {

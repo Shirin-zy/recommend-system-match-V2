@@ -2,7 +2,7 @@ import { makeAutoObservable, computed, observable, action } from "mobx";
 import { HomeOutlined } from "@ant-design/icons";
 
 class AppStore {
-  @observable userName: string = "root";
+  @observable userName: string = "请登录";
   @observable isLogin: boolean = false;
   @observable routes: { href: string; title: JSX.Element }[] = [
     {
