@@ -52,6 +52,7 @@ const SyncCard = ({
     // 监听消息事件
     sckoet.onmessage = (event) => {
       const data = event.data;
+      console.log("收到服务器消息:", data);
       if (data === "complete") {
         setSyncStatus("success");
         const now = new Date().toLocaleString();

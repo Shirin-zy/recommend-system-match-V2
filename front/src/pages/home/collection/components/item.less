@@ -1,0 +1,133 @@
+.item {
+  width: 385px;
+  height: 230px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    0 6px 16px -8px rgba(0, 0, 0, 0.08),
+    0 9px 28px 0 rgba(0, 0, 0, 0.05),
+    0 12px 48px 16px rgba(0, 0, 0, 0.03);
+  &:hover {
+    box-shadow:
+      0 3px 6px -4px rgba(0, 0, 0, 0.12),
+      0 6px 16px 0 rgba(0, 0, 0, 0.08),
+      0 9px 28px 0 rgba(0, 0, 0, 0.05);
+  }
+  .left {
+    height: 100%;
+    width: 120px;
+    background-color: #2563eb;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 20x;
+  }
+  .right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px 20px 10px;
+    .cradTitle {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      div {
+        &:nth-child(1) {
+          flex: 7;
+          line-height: 24px;
+          font-weight: 700;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2; /* 设置你想要的行数 */
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        &:nth-child(2) {
+          flex: 1;
+          margin-top: 10px;
+        }
+      }
+    }
+    .cardInfo {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      flex: 4;
+      display: flex;
+      flex-direction: row;
+      div {
+        &:nth-child(1) {
+          flex: 1;
+          span {
+            line-height: 24px;
+            display: block;
+            text-align: left;
+            font-size: 14px;
+            color: #a2a2a2;
+          }
+        }
+        &:nth-child(2) {
+          flex: 1;
+          span {
+            line-height: 24px;
+            display: block;
+            text-align: right;
+            font-size: 14px;
+            &:nth-child(1) {
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 1; /* 设置你想要的行数 */
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+    }
+    .cardEnd {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      div {
+        &:nth-child(1) {
+          flex: 1;
+          span {
+            box-sizing: content-box;
+            display: inline-block;
+            padding: 2px 5px;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 10px;
+          }
+          .start {
+            background-color: #2563eb;
+            color: #ffffff;
+          }
+          .register {
+            background-color: #22c55e;
+            color: #ffffff;
+          }
+          .during {
+            background-color: #f97316;
+            color: #ffffff;
+          }
+          .end {
+            border: 0.5px solid #a2a2a2;
+          }
+        }
+        &:nth-child(2) {
+          flex: 2;
+          text-align: right;
+          font-size: 14px;
+          color: #a2a2a2;
+        }
+      }
+    }
+  }
+}

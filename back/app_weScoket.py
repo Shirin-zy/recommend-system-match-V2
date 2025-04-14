@@ -22,8 +22,8 @@ def background_task(ws):
         current_page = page
         res = fetch_contest_lists(page=page,limit=10)
         matchInfo.extend(res)
-        if page%10==0:
-            print(f'已完成{page}页')
+        # if page%10==0:
+        #     print(f'已完成{page}页')
         progress = (current_page) * 100 / total
         ws.send(progress)
     df = pd.DataFrame(matchInfo)

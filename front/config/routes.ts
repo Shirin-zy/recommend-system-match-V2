@@ -1,8 +1,18 @@
+import { Component } from "react";
+
 const routes = [
   // 不需要布局的路由
   {
     path: "/login",
     component: "@/pages/setting/login/index",
+  },
+  {
+    path: "/userInfo/detail",
+    component: "@/pages/others/userInfo/index",
+  },
+  {
+    path: "/test/testifame",
+    component: "@/pages/others/others/test.tsx",
   },
   {
     path: "/404",
@@ -33,6 +43,10 @@ const routes = [
       {
         path: "/matchInfo",
         component: "@/pages/home/dataDetail/index",
+      },
+      {
+        path: "/collection",
+        component: "@/pages/home/collection/index",
       },
     ],
   },

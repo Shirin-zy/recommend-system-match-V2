@@ -94,6 +94,32 @@
     .breadcrumb {
       height: 50px;
       padding: 24px 15px;
+      display: flex;
+      justify-content: space-between;
+      overflow: hidden;
+      .scrollingText {
+        width: 50%;
+        height: 50px;
+        overflow: hidden;
+        white-space: nowrap;
+        box-sizing: border-box;
+        position: relative;
+        text-align: right;
+        span {
+          display: inline-block;
+          font-size: 20px;
+          color: #a2a2a2;
+          animation: scroll-left 15s linear infinite;
+        }
+      }
+      @keyframes scroll-left {
+        0% {
+          transform: translateX(100%);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
     }
   }
 }

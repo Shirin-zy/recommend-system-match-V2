@@ -10,7 +10,7 @@ def create_token(user_id:str):
       :return: 生成的JWT令牌
       """
     payload = {
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=3600),  # 过期时间为1天后
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=300000),  # 过期时间为1天后
         'iat': datetime.datetime.utcnow(),  # 发行时间为当前时间
         'sub': user_id  # 主题为用户ID
     }

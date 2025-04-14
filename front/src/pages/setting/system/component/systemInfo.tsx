@@ -24,7 +24,6 @@ const SystemInfo = () => {
     socket.onmessage = (event) => {
       // 可以在这里解析JSON字符串并更新状态
       const sysInfo = JSON.parse(event.data);
-      console.log("sysInfo:", sysInfo);
       setSystemData(sysInfo);
     };
 
@@ -93,7 +92,9 @@ const SystemInfo = () => {
               <Text strong className={style.title}>
                 CPU使用率：
               </Text>
-              <Text className={style.details}>{systemData[0].cpu_percent}%</Text>
+              <Text className={style.details}>
+                {systemData[0].cpu_percent}%
+              </Text>
             </div>
           </Col>
           <Col xs={24} md={6}>

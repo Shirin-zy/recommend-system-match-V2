@@ -6,7 +6,7 @@ import { message } from "antd";
 // 创建 axios 实例并设置基础 URL
 const axiosInstance = axios.create({
   baseURL: "http://127.0.0.1:8444/",
-  timeout: 10000, // 可选：设置请求超时时间
+  // timeout: 10000, // 可选：设置请求超时时间
 });
 
 // 请求拦截器
@@ -16,7 +16,7 @@ axiosInstance.interceptors.request.use(
       // 检查token状态是否为过期
       message.error("登录已过期，请重新登录");
       history.push("/login"); // 跳转到登录页面
-      return Promise.reject(new Error("Token expired")); // 拒绝请求
+      // return Promise.reject(new Error("Token expired")); // 拒绝请求
     }
 
     const token = App.state.token;

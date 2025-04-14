@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine, text
 
+# 获取禁赛数据(支持分页以及赛选排序)
 def fetch_paginated_data(limit, page, class_id, level, sort):
     engine = create_engine('mysql+pymysql://root:zy15730850419@localhost/match_recommend_system')  # 替换为你的数据库连接字符串
     offset = (page - 1) * limit
@@ -77,6 +78,7 @@ def fetch_paginated_data(limit, page, class_id, level, sort):
 
         # 构建每条记录的字典
         record = {
+            'ID': _,
             "contest_id": contest_id,
             "contest_name": contest_name,
             "contest_url": contest_url,
@@ -107,3 +109,68 @@ def fetch_paginated_data(limit, page, class_id, level, sort):
     data["data"]["total"] = total_records
 
     return data
+
+# 获取收藏的竞赛数据
+def fetch_collection(email):
+    engine = create_engine('mysql+pymysql://root:zy15730850419@localhost/match_recommend_system')  # 替换为你的数据库连接字符串
+
+    data = {
+        "code": 200,
+        "msg": "",
+        "data": {
+            "list": [],
+        }
+    }
+
+    with engine.connect() as connection:
+        # 首先查询是否存在指定email的记录
+        query_select_collection = text("SELECT collection FROM userInfo WHERE email = :email")
+        result = connection.execute(query_select_collection, {"email": email}).fetchone()
+        collections_str = result[0]  # 获取collection字段值
+        collections_list = [int(item.strip()) for item in collections_str.split(',')] if collections_str else []  # 转换成整型列表
+        if collections_list:
+            query_select_detailInfo = text(f"SELECT * FROM matchInfo WHERE ID IN :ids")
+            datas = connection.execute(query_select_detailInfo, {"ids": tuple(collections_list)}).fetchall()
+            for row in datas:
+                _, contest_id, contest_name, contest_url, is_exam, is_contest_status, \
+                regist_start_time, regist_end_time, contest_start_time, contest_end_time, \
+                thumb_pic, level_name, organiser, organiser_name, enter_range, \
+                contest_class_first, contest_class_second, contest_class_second_id, \
+                time_status, time_name, ranking, is_new, module = row
+
+                # 构建每条记录的字典
+                record = {
+                    'ID': _,
+                    "contest_id": contest_id,
+                    "contest_name": contest_name,
+                    "contest_url": contest_url,
+                    "is_exam": is_exam,
+                    "is_contest_status": is_contest_status,
+                    "regist_start_time": regist_start_time,
+                    "regist_end_time": regist_end_time,
+                    "contest_start_time": contest_start_time,
+                    "contest_end_time": contest_end_time,
+                    "thumb_pic": thumb_pic,
+                    "level_name": level_name,
+                    "organiser": organiser,
+                    "organiser_name": organiser_name,
+                    "enter_range": enter_range,
+                    "contest_class_first": contest_class_first,
+                    "contest_class_second": contest_class_second,
+                    "contest_class_second_id": contest_class_second_id,
+                    "time_status": time_status,
+                    "time_name": time_name,
+                    "rank": ranking,  # 注意这里原数据中的"ranking"字段名被改为"rank"
+                    "is_new": is_new,
+                    "module": module
+                }
+
+                data["data"]["list"].append(record)
+            data['msg'] = '获取成功'
+            return  data
+        else:
+            return  data
+
+if __name__ == '__main__':
+    collections = fetch_collection(email='15023244414@qq.com')
+    print(collections)

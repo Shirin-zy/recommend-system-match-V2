@@ -6,7 +6,6 @@ const token = "your.jwt.token.here";
 try {
   // 解码token
   const decoded = jwtDecode(token);
-  console.log(decoded);
   // 输出将是一个对象，包含了payload中的所有声明
 } catch (err) {
   // 处理解码错误

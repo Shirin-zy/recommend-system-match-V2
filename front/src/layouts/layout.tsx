@@ -9,6 +9,7 @@ import { Button } from "antd";
 import MyBreadcrumb from "./components/breadcrumb";
 import "../global.less";
 import decodeToken from "@/utlis/tokenEncode";
+import { history } from "umi";
 const Layout = () => {
   const [showUserInfo, setShowUserInfo] = useState<boolean>(false);
 
@@ -18,7 +19,12 @@ const Layout = () => {
       <nav className={styles.navs}>
         <img src="https://www.cqut.edu.cn/2024/img/logo.png" alt="" />
         <div className={styles.user_info}>
-          <TeamOutlined style={{ color: "#ffffff", fontSize: 18 }} />
+          <TeamOutlined
+            style={{ color: "#ffffff", fontSize: 18 }}
+            onClick={() => {
+              history.push("/userInfo/detail");
+            }}
+          />
           <span style={{ color: "#ffffff", fontSize: 16, fontWeight: 300 }}>
             {App.state.username}
           </span>
@@ -33,7 +39,7 @@ const Layout = () => {
         <div
           className={`${styles.detail} ${showUserInfo ? styles.show : styles.hidden}`}
         >
-          <div>当前账号</div>
+          <div>当前账号：{App.state.email}</div>
           <div>
             <Button
               onClick={() => {
@@ -58,6 +64,9 @@ const Layout = () => {
         <div className={styles.body}>
           <div className={styles.breadcrumb}>
             <MyBreadcrumb routes={App.state.routes} />
+            <div className={styles.scrollingText}>
+              <span>{App.state.msgTips}</span>
+            </div>
           </div>
           <div className={styles.content}>
             <Outlet />

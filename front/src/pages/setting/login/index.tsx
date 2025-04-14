@@ -37,7 +37,8 @@ const LoginCard: React.FC = () => {
       message.success(data.msg);
       App.setUserName(data.data.username);
       App.setToken(data.data.token);
-      history.push("/");
+      App.setEmail(values.email);
+      history.push("/home");
     } else {
       message.error(data.msg);
     }

@@ -1,4 +1,4 @@
-# 将数据插入到数据库
+# 将数据插入到数据库，可直接运行进行插入
 import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine, text
@@ -20,8 +20,8 @@ def store_data_to_mysql(df):
         for index, row in df.iterrows():
             # 处理nan值
             params = handle_nan(row).to_dict()
-            if index % 100 == 0:
-                print(params)
+            # if index % 100 == 0:
+            #     print(params)
 
             query = text("""
             INSERT INTO matchInfo (ID, contest_id, contest_name, contest_url, is_exam, is_contest_status,

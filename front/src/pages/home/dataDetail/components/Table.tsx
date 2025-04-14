@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import style from "./table.less";
-import { Pagination } from "antd";
+import { Pagination, Button, message } from "antd";
 import { bg_url, icon_url } from "./urlList";
+import { HeartFilled } from "@ant-design/icons";
+import { updateCollection } from "@/service/userInfo";
+import { observer } from "mobx-react-lite";
+import App from "@/stores/newApp";
 
 interface item {
+  ID: number;
   contest_class_first: number;
   contest_class_second: string;
   contest_class_second_id: number;
@@ -68,17 +73,31 @@ const transformData = (timestamp: number) => {
   return `${year}-${month}-${day}`;
 };
 
+// 更新收藏
+const changeCollection = async (email: string, id: string) => {
+  const data = await updateCollection(email, id);
+  App.setCollectionss(data.data.collections);
+  message.success(data.msg);
+};
+
 // 单个比赛信息
 const Item = ({ item }: { item: item }) => {
+  const [color, setColor] = useState(""); // 收藏按钮颜色
+  useEffect(() => {
+    // 初始化颜色
+    setColor(
+      App.state.collections.includes(String(item.ID)) ? "#ff0605" : "#a2a2a2"
+    );
+  }, []);
   return (
     <>
-      <div
-        onClick={() =>
-          window.open(`https://www.saikr.com/${item.contest_url}`, "_blank")
-        }
-        className={style.item}
-      >
-        <div className={style.left}>
+      <div className={style.item}>
+        <div
+          className={style.left}
+          onClick={() =>
+            window.open(`https://www.saikr.com/${item.contest_url}`, "_blank")
+          }
+        >
           {item.thumb_pic ? (
             <img src={item.thumb_pic} alt="" />
           ) : (
@@ -144,6 +163,23 @@ const Item = ({ item }: { item: item }) => {
           {calculateDaysDifference(item.contest_end_time) <= 0 && (
             <span className={style.end}>比赛结束</span>
           )}
+          <span className={style.button}>
+            <HeartFilled
+              style={{
+                fontSize: "20px",
+                color: color,
+              }}
+              onClick={() => {
+                // 切换颜色
+                setColor(
+                  (prevColor) =>
+                    prevColor === "#ff0605" ? "#a2a2a2" : "#ff0605" // 切换收藏按钮颜色
+                );
+                // 调用 changeCollection 函数
+                changeCollection(App.state.email, String(item.ID));
+              }}
+            />
+          </span>
         </div>
       </div>
       <hr />
@@ -172,4 +208,4 @@ const Table = (props: IProps) => {
   );
 };
 
-export default Table;
+export default observer(Table);

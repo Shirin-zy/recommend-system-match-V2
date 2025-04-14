@@ -20,6 +20,7 @@ const Side = ({ addBreadcrumbRoutes }: Iprpos) => {
       children: [
         { name: "主页", router: "/home" },
         { name: "比赛信息", router: "/matchInfo" },
+        { name: "我的收藏", router: "/collection" },
       ],
     },
     {

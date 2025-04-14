@@ -38,15 +38,6 @@ const MatchInfo = () => {
     };
 
     fetchData();
-    console.log(
-      "赛选参数:",
-      "类别:",
-      selectedCategories,
-      "级别:",
-      selectLevel,
-      "排序:",
-      selectSort
-    );
   }, [pagination, selectedCategories, selectLevel, selectSort]);
 
   // 分页变化

@@ -1,16 +1,20 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, set } from "mobx";
 import { HomeOutlined } from "@ant-design/icons";
 import decodeToken from "@/utlis/tokenEncode";
 
 class AppState {
   state: {
+    email: string;
     username: string;
     isLogin: boolean;
     role: string;
     token: string;
     routes: { href: string; title: JSX.Element }[];
+    collections: string[]; // 收藏比赛id
+    msgTips: string; // 顶部滚顶播报
   } = {
-    username: "请登录",
+    email: localStorage.getItem("email") || "请登录",
+    username: localStorage.getItem("username") || "请登录",
     isLogin: false,
     role: "common",
     token: localStorage.getItem("token") || "",
@@ -20,6 +24,8 @@ class AppState {
         title: <HomeOutlined />,
       },
     ],
+    collections: JSON.parse(localStorage.getItem("collections") || "[]"),
+    msgTips: "",
   };
 
   constructor() {
@@ -46,12 +52,29 @@ class AppState {
   // 设置用户名
   setUserName = (name: string) => {
     this.state.username = name;
+    localStorage.setItem("username", name);
   };
 
   // 设置token
   setToken = (token: string) => {
     this.state.token = token;
     localStorage.setItem("token", token);
+  };
+
+  // 设置邮箱
+  setEmail = (email: string) => {
+    this.state.email = email;
+    localStorage.setItem("email", email);
+  };
+
+  // 设置收藏比赛id
+  setCollectionss = (ids: string) => {
+    this.state.collections = ids.split(",");
+    localStorage.setItem("collections", JSON.stringify(ids.split(",")));
+  };
+
+  setMsgTips = (msg: string) => {
+    this.state.msgTips = msg;
   };
 }
 

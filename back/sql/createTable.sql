@@ -1,3 +1,4 @@
+-- 比赛信息表
 CREATE TABLE IF NOT EXISTS matchInfo (
     ID INT PRIMARY KEY, -- ID 主键
     contest_id BIGINT , -- id
@@ -24,9 +25,25 @@ CREATE TABLE IF NOT EXISTS matchInfo (
     module INT -- 模块
 );
 
+-- 用户账号表
 CREATE TABLE  IF NOT  EXISTS userCount (
     email VARCHAR(255) PRIMARY KEY, -- 邮箱
     password VARCHAR(20), -- 密码
     username VARCHAR(20), -- 用户名
     role VARCHAR(20) -- 角色
 );
+
+-- 用户信息表
+CREATE TABLE IF NOT EXISTS userInfo (
+    email VARCHAR(255) PRIMARY KEY , -- 邮箱
+    professional VARCHAR(100), -- 专业
+    purpose INT, -- 参赛目的
+    experience INT, -- 参赛经验
+    interest INT, -- 兴趣爱好
+    level VARCHAR(20), -- 年级
+    nature INT, -- 性格
+    starttime INT, -- 期望开始参赛时间
+    endtime INT, -- 期望比赛结束时间
+    collection VARCHAR(10000) -- 收藏的比赛
+);
+
