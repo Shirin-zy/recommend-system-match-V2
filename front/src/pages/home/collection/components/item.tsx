@@ -93,7 +93,16 @@ const CollectionItem: React.FC<CollectionItemProps> = ({
         <div className={style.left}>{collectionInfo.contest_name}</div>
         <div className={style.right}>
           <div className={style.cradTitle}>
-            <div>{collectionInfo.contest_name}</div>
+            <div
+              onClick={() => {
+                window.open(
+                  `https://www.saikr.com/${collectionInfo.contest_url}`,
+                  "_blank"
+                );
+              }}
+            >
+              {collectionInfo.contest_name}
+            </div>
             <div>
               <Tooltip placement="top" title={tips} color="blue">
                 <HeartFilled

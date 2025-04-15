@@ -56,7 +56,6 @@ const routes = [
     path: "/",
     redirect: "/home",
   },
-
   // 通配符路由必须放在最后
   {
     path: "*",

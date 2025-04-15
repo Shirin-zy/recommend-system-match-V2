@@ -10,6 +10,17 @@ import MyBreadcrumb from "./components/breadcrumb";
 import "../global.less";
 import decodeToken from "@/utlis/tokenEncode";
 import { history } from "umi";
+
+// 退出登录并清除数据
+const LoginOut = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("email");
+  localStorage.removeItem("tipsVisible");
+  localStorage.removeItem("username");
+  localStorage.removeItem("collections");
+  history.push("/login");
+  App.clearState();
+};
 const Layout = () => {
   const [showUserInfo, setShowUserInfo] = useState<boolean>(false);
 
@@ -49,6 +60,7 @@ const Layout = () => {
             >
               测试
             </Button>
+            <Button onClick={LoginOut}>退出登录</Button>
           </div>
         </div>
       </nav>

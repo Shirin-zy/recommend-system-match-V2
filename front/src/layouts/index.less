@@ -97,8 +97,10 @@
       display: flex;
       justify-content: space-between;
       overflow: hidden;
+      position: relative;
       .scrollingText {
-        width: 50%;
+        position: absolute;
+        width: 800px;
         height: 50px;
         overflow: hidden;
         white-space: nowrap;
@@ -106,6 +108,7 @@
         position: relative;
         text-align: right;
         span {
+          overflow: hidden;
           display: inline-block;
           font-size: 20px;
           color: #a2a2a2;
@@ -118,6 +121,11 @@
         }
         100% {
           transform: translateX(-100%);
+        }
+      }
+      @media (max-width: 1120px) {
+        .scrollingText {
+          display: none;
         }
       }
     }

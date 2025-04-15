@@ -76,7 +76,7 @@ const transformData = (timestamp: number) => {
 // 更新收藏
 const changeCollection = async (email: string, id: string) => {
   const data = await updateCollection(email, id);
-  App.setCollectionss(data.data.collections);
+  App.setCollections(data.data.collections);
   message.success(data.msg);
 };
 
@@ -193,7 +193,7 @@ const Table = (props: IProps) => {
   return (
     <>
       {matchInfo.map((item, index) => (
-        <Item key={index} item={item} />
+        <Item key={item.ID} item={item} />
       ))}
       <Pagination
         style={{ marginTop: "30px" }}

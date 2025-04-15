@@ -22,6 +22,9 @@ const { Option } = Select;
 
 // 将日期字符串转换为时间戳
 const convertToTimestamp = (dateStr: string): number => {
+  if (!dataSync) {
+    return 0;
+  }
   // 转换为ISO格式，确保能被正确解析
   const isoStr = dateStr.replace(" ", "T") + ":00Z";
   const date = new Date(isoStr);
@@ -61,8 +64,8 @@ const UserInfo = () => {
       values.interest,
       values.level,
       values.nature,
-      convertToTimestamp(values.timeRange[0]),
-      convertToTimestamp(values.timeRange[1])
+      convertToTimestamp(values.timeRange?.[0]),
+      convertToTimestamp(values.timeRange?.[1])
     );
     if (data.data.data.result === "succeed") {
       message.success(data.data.msg);
