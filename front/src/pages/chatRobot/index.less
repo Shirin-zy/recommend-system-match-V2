@@ -1,0 +1,104 @@
+.content {
+  position: fixed;
+  z-index: 999;
+  .chatRobot {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: row;
+    .side {
+      flex: 1;
+      padding: 8px;
+      border-right: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .body {
+      flex: 3;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      .header {
+        flex: 2;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        cursor: move;
+        padding: 0 20px 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        justify-self: center;
+        span {
+          align-self: center;
+          color: #359eff;
+          font-weight: 700;
+        }
+        .close {
+          color: #a2a2a2;
+          cursor: pointer;
+          &:hover {
+            color: red;
+          }
+        }
+      }
+      .middle {
+        flex: 20;
+        background-color: #f9fafb;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #eaeaea transparent;
+        scrollbar-gutter: stable;
+        .noChat {
+          width: 300px;
+          height: 120px;
+          margin: 0 auto;
+          transform: translateY(100%);
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+          .icon {
+            font-size: 50px;
+            color: #d1d5db;
+          }
+          .info {
+            font-size: 16px;
+            font-weight: 700;
+            color: #374151;
+          }
+          .subInfo {
+            font-size: 12px;
+            color: #a2a2a2;
+            text-align: center;
+          }
+        }
+      }
+      .footer {
+        flex: 3;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        text-align: center;
+        div {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          text-align: center;
+          .input {
+            margin-right: 10px;
+            border: #359eff 1px solid;
+            scrollbar-width: thin;
+            scrollbar-color: #eaeaea transparent;
+            scrollbar-gutter: stable;
+          }
+          .send {
+          }
+        }
+        .tips {
+          display: block;
+          color: #a2a2a2;
+          font-size: 12px;
+          font-weight: 300;
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+}

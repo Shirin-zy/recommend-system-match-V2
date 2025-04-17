@@ -15,6 +15,7 @@ from dealData.insertMatchInfoToDatabase import store_data_to_mysql
 from service.uerCountService import handle_login,handle_register
 from service.userInfoService import handle_getUserInfo,handle_editUserInfo,collectedMatch
 import os
+from openai import OpenAI
 from flask_cors import CORS  # 安装：pip install flask-cors
 warnings.filterwarnings('ignore')
 app = Flask(__name__)
@@ -136,6 +137,31 @@ def updateCollection():
     id = request.json.get('id')
 
     return jsonify(collectedMatch(email=email,id=id))
+
+# 聊天机器人
+@app.route('/api/chatRobot',methods=['post'])
+def robotReply():
+    data = {
+        'code':200,
+        'data':{
+            'context':''
+        }
+    }
+    context = request.json.get('context')
+    print(context)
+    client = OpenAI(api_key="sk-2eb407036ec44a85b7d7c2913ad64290", base_url="https://api.deepseek.com")
+
+    response = client.chat.completions.create(
+        # model='deepseek-reasoner',
+        model="deepseek-chat",
+
+        messages=context,
+        stream=False
+    )
+    print(response.choices[0].message.content)
+    data['data']['context'] = response.choices[0].message.content
+
+    return jsonify(data)
 
 if __name__ == '__main__':
     app.run(debug=True,port=8444)

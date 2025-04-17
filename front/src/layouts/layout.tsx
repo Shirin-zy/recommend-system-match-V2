@@ -1,6 +1,11 @@
 import { Outlet, Link } from "umi";
 import styles from "./index.less";
-import { TeamOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
+import {
+  TeamOutlined,
+  DownOutlined,
+  UpOutlined,
+  RobotFilled,
+} from "@ant-design/icons";
 import { useState } from "react";
 import { observer } from "mobx-react-lite";
 import App from "@/stores/newApp";
@@ -10,6 +15,7 @@ import MyBreadcrumb from "./components/breadcrumb";
 import "../global.less";
 import decodeToken from "@/utlis/tokenEncode";
 import { history } from "umi";
+import ChatRobot from "@/pages/chatRobot";
 
 // 退出登录并清除数据
 const LoginOut = () => {
@@ -21,8 +27,15 @@ const LoginOut = () => {
   history.push("/login");
   App.clearState();
 };
+
 const Layout = () => {
-  const [showUserInfo, setShowUserInfo] = useState<boolean>(false);
+  const [showUserInfo, setShowUserInfo] = useState<boolean>(false); // 控制用户信息显示隐藏
+  const [showRobot, setShowRobot] = useState<boolean>(false); // 控制对话机器人显示隐藏
+
+  // 关闭对话机器人
+  const closeRobot = () => {
+    setShowRobot(false);
+  };
 
   return (
     <div>
@@ -84,6 +97,13 @@ const Layout = () => {
             <Outlet />
           </div>
         </div>
+      </div>
+      {showRobot && <ChatRobot close={closeRobot} />}
+      <div
+        className={styles.showRobotButton}
+        onClick={() => setShowRobot(!showRobot)}
+      >
+        <RobotFilled style={{ color: "#359eff", fontSize: 25 }} />
       </div>
     </div>
   );
