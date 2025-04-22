@@ -76,17 +76,17 @@ const CollectionItem: React.FC<CollectionItemProps> = ({
   collectionInfo,
   changeCollection,
 }) => {
-  const [color, setColor] = useState("#a2a2a2"); // 收藏按钮颜色
-  const [tips, setTips] = useState("收藏");
+  const [color, setColor] = useState("#ff0605"); // 收藏按钮颜色
+  const [tips, setTips] = useState("取消收藏");
   const labelInfo = getContestStatus(collectionInfo);
-  useEffect(() => {
-    // 初始化颜色
-    setColor(
-      App.state.collections.includes(String(collectionInfo.ID))
-        ? "#ff0605"
-        : "#a2a2a2"
-    );
-  }, []);
+  // useEffect(() => {
+  //   // 初始化颜色
+  //   setColor(
+  //     App.state.collections.includes(String(collectionInfo.ID))
+  //       ? "#ff0605"
+  //       : "#a2a2a2"
+  //   );
+  // }, []);
   return (
     <>
       <div className={style.item}>
@@ -94,6 +94,7 @@ const CollectionItem: React.FC<CollectionItemProps> = ({
         <div className={style.right}>
           <div className={style.cradTitle}>
             <div
+              style={{ cursor: "pointer" }}
               onClick={() => {
                 window.open(
                   `https://www.saikr.com/${collectionInfo.contest_url}`,

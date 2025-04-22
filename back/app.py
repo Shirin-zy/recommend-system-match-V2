@@ -12,7 +12,7 @@ from service.getMatchInfo import fetch_contest_lists
 from service.selectMatchInfo import fetch_paginated_data,fetch_collection
 from  dealData.addID import addId
 from dealData.insertMatchInfoToDatabase import store_data_to_mysql
-from service.uerCountService import handle_login,handle_register
+from service.uerCountService import handle_login,handle_register,getAllAccount,updateUserAccount,deleteAccount,searchAccount
 from service.userInfoService import handle_getUserInfo,handle_editUserInfo,collectedMatch
 import os
 from openai import OpenAI
@@ -83,6 +83,7 @@ def get_match_info ():
         data = fetch_paginated_data(limit=limit,page=page,class_id=class_id,level=level,sort=sort)
         return jsonify(data)
     except Exception as e:
+
         return jsonify(structured_data = {
         "code": 200,
         "msg": str(e),
@@ -92,6 +93,7 @@ def get_match_info ():
 @app.route('/api/collections',methods=['get'])
 def get_collection():
     email = request.args.get('email',default='',type=str)
+
     return jsonify(fetch_collection(email=email))
 
 # 登录接口
@@ -99,23 +101,34 @@ def get_collection():
 def login():
     email = request.json.get('email')
     password = request.json.get('password')
+
     return jsonify(handle_login(email, password))
 
-# 注册接口
+# 注册账户接口
 @app.route('/api/register',methods=['post'])
 def register():
     email = request.json.get('email')
     password = request.json.get('password')
     username = request.json.get('username')
-    return  jsonify(handle_register(username,password,email))
+    role = request.json.get('role')
 
-# 获取用户信息接口
+    return  jsonify(handle_register(username,password,email,role))
+
+# 注销账户接口
+@app.route('/api/user/delete',methods=['post'])
+def delete():
+     email = request.json.get('email')
+
+     return jsonify(deleteAccount(email))
+
+# 获取账户个人信息
 @app.route('/api/getUserInfo',methods=['get'])
 def getUserInfo():
     email = request.args.get('email',default='',type=str)
+
     return jsonify(handle_getUserInfo(email))
 
-# 编辑用户信息
+# 编辑账户个人信息
 @app.route('/api/editUserInfo',methods=['post'])
 def editUserInfo():
     email = request.json.get('email')
@@ -130,7 +143,35 @@ def editUserInfo():
 
     return  jsonify(handle_editUserInfo(email=email,professional=professional,purpose=purpose,experience=experience,interest=interest,level=level,nature=nature,starttime=starttime,endtime=endtime))
 
-# 更新收藏信息
+# 获取全部账户
+@app.route('/api/allUser',methods=['get'])
+def getAllUser():
+    page = request.args.get('page',default=1,type=int)
+    limit = request.args.get('limit',default=10,type=int)
+
+    return jsonify(getAllAccount(page,limit))
+
+# 关键词搜索账户
+@app.route('/api/searchAccount',methods=['post'])
+def serachAccount():
+    keyword = request.json.get('keyword')
+    print(keyword)
+
+    return searchAccount(keyword)
+
+# 更新账户状态信息
+@app.route('/api/updateAccount',methods=['post'])
+def updateAccount():
+    email = request.json.get('email')
+    username = request.json.get('username')
+    role = request.json.get('role')
+    status = request.json.get('status')
+    password = request.json.get('password')
+
+    return  jsonify(updateUserAccount(userName=username,email=email,role=role,status=status,password=password))
+
+
+# 更新账号收藏信息
 @app.route('/api/updateCollection',methods=['post'])
 def updateCollection():
     email = request.json.get('email')

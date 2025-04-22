@@ -30,7 +30,9 @@ CREATE TABLE  IF NOT  EXISTS userCount (
     email VARCHAR(255) PRIMARY KEY, -- 邮箱
     password VARCHAR(20), -- 密码
     username VARCHAR(20), -- 用户名
-    role VARCHAR(20) -- 角色
+    role VARCHAR(20), -- 角色
+    status VARCHAR(20), -- 账户状态
+    createDate INT -- 创建日期
 );
 
 -- 用户信息表

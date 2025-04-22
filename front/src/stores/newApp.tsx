@@ -43,7 +43,7 @@ class AppState {
     email: localStorage.getItem("email") || "请登录",
     username: localStorage.getItem("username") || "请登录",
     isLogin: false,
-    role: "common",
+    role: localStorage.getItem("role") || "common",
     token: localStorage.getItem("token") || "",
     routes: [
       {
@@ -89,6 +89,11 @@ class AppState {
     localStorage.setItem("token", token);
   };
 
+  setRole = (role: string) => {
+    this.state.role = role;
+    localStorage.setItem("role", role);
+  };
+
   // 设置邮箱
   setEmail = (email: string) => {
     this.state.email = email;
@@ -96,9 +101,15 @@ class AppState {
   };
 
   // 设置收藏比赛id
-  setCollections = (ids: string) => {
-    this.state.collections = ids.split(",");
-    localStorage.setItem("collections", JSON.stringify(ids.split(",")));
+  setCollections = (ids: string | string[]) => {
+    if (typeof ids === "string") {
+      ids = ids.split(",");
+      this.state.collections = ids;
+      localStorage.setItem("collections", JSON.stringify(ids));
+    } else {
+      this.state.collections = ids;
+      localStorage.setItem("collections", JSON.stringify(ids));
+    }
   };
 
   // 设置顶部滚动提示信息

@@ -37,10 +37,16 @@ const LoginCard: React.FC = () => {
       message.success(data.msg);
       App.setUserName(data.data.username);
       App.setToken(data.data.token);
+      App.setRole(data.data.role);
       App.setEmail(values.email);
+
       history.push("/home");
     } else {
-      message.error(data.msg);
+      if (data.msg === "邮箱或密码错误") {
+        message.error(data.msg);
+      } else {
+        message.warning(data.msg);
+      }
     }
   };
 

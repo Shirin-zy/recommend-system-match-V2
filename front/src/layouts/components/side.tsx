@@ -4,15 +4,53 @@ import {
   SettingOutlined,
   BarChartOutlined,
   BankOutlined,
+  UnlockOutlined,
 } from "@ant-design/icons";
 import routes from "config/routes";
+import App from "@/stores/newApp";
+import { observer } from "mobx-react-lite";
 
 interface Iprpos {
   addBreadcrumbRoutes: (href: string, title: JSX.Element) => void;
 }
 
 const Side = ({ addBreadcrumbRoutes }: Iprpos) => {
-  const orerMenu = [
+  const orerMenu_admin = [
+    {
+      name: "主页",
+      router: "/",
+      icon: <BankOutlined />,
+      children: [
+        { name: "主页", router: "/home" },
+        { name: "比赛信息", router: "/matchInfo" },
+        { name: "我的收藏", router: "/collection" },
+      ],
+    },
+    {
+      name: "数据概览",
+      router: "/",
+      icon: <BarChartOutlined />,
+      children: [{ name: "数据同步", router: "/dataSync" }],
+    },
+    {
+      name: "用户管理",
+      router: "/",
+      icon: <UnlockOutlined />,
+      children: [{ name: "用户管理", router: "/manage/user" }],
+    },
+    {
+      name: "设置",
+      router: "/",
+      icon: <SettingOutlined />,
+      children: [
+        { name: "设置", router: "/setting" },
+        { name: "登录", router: "/login" },
+        { name: "系统管理", router: "/system" },
+      ],
+    },
+  ];
+
+  const orerMenu_common = [
     {
       name: "主页",
       router: "/",
@@ -36,10 +74,12 @@ const Side = ({ addBreadcrumbRoutes }: Iprpos) => {
       children: [
         { name: "设置", router: "/setting" },
         { name: "登录", router: "/login" },
-        { name: "系统管理", router: "/system" },
       ],
     },
   ];
+
+  const orerMenu =
+    App.state.role === "common" ? orerMenu_common : orerMenu_admin;
 
   return (
     <>
@@ -97,4 +137,4 @@ const Side = ({ addBreadcrumbRoutes }: Iprpos) => {
   );
 };
 
-export default Side;
+export default observer(Side);

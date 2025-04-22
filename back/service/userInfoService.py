@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, text
 from back.service.tokenServiceByJWT import create_token
 
-# 登录
+# 编辑用户信息
 def handle_editUserInfo(email,professional,purpose,experience,interest,level,nature,starttime,endtime):
     engine = create_engine('mysql+pymysql://root:zy15730850419@localhost/match_recommend_system')  # 替换为你的数据库连接字符串
 
@@ -65,7 +65,7 @@ def handle_editUserInfo(email,professional,purpose,experience,interest,level,nat
     return data
 
 
-#　注册
+#　获取用户信息
 def handle_getUserInfo(email):
     engine = create_engine('mysql+pymysql://root:zy15730850419@localhost/match_recommend_system')  # 替换为你的数据库连接字符串
 

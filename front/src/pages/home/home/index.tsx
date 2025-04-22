@@ -11,6 +11,12 @@ const Home = () => {
     const getCollectionData = async () => {
       const res = await getCollection(App.state.email);
       const data = res.data.list;
+      // 登录后将首次收藏数据保的ID同步至state并缓存到本地
+      localStorage.setItem(
+        "collections",
+        JSON.stringify(data.map((item) => item.ID + ""))
+      );
+      App.setCollections(data.map((item) => item.ID + ""));
       if (getLatestCollection(data)) {
         App.setMsgTips(
           `亲爱的用户，您订阅的“${getLatestCollection(data).contest_name}”，距离报名截止还有${registerTime(getLatestCollection(data).regist_end_time)}天，请及时关注！`

@@ -48,6 +48,10 @@ const routes = [
         path: "/collection",
         component: "@/pages/home/collection/index",
       },
+      {
+        path: "/manage/user",
+        component: "@/pages/manage/manageUser/index",
+      },
     ],
   },
 

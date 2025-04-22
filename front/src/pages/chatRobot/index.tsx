@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { Resizable } from "react-resizable";
 import "react-resizable/css/styles.css";
 import style from "./index.less";
 import { DeleteOutlined, SendOutlined, TwitchFilled } from "@ant-design/icons";
-import { Input, Button } from "antd";
+import { Input, Button, Tooltip } from "antd";
 import ChatHistory from "./components/chatHistory";
 import { getRobotReply } from "@/service/chatRobot";
 
@@ -36,6 +36,18 @@ const ChatRobot: React.FC<ChatRobotProps> = ({ close }) => {
   const [inputMessage, setInputMessage] = useState(""); // 输入框内容
   const [inputDisabled, setInputDisabled] = useState(false); // 控制输入框是否禁用
   const [messages, setMessages] = useState<Message[]>([]); // 聊天记录
+  const [selectedHistory, setSelectedHistory] = useState(0); // 选中的历史记录
+  const [allChatHistory, setAllChatHistory] = useState<Message[][]>([]);
+
+  useEffect(() => {
+    setAllChatHistory(
+      JSON.parse(localStorage.getItem("allChatHistory") || "[ ]")
+    );
+  }, []);
+
+  useEffect(() => {
+    console.log(messages);
+  }, [messages]);
 
   // 获取机器人回复
   const getReply = async (messages: any[]) => {
@@ -128,7 +140,70 @@ const ChatRobot: React.FC<ChatRobotProps> = ({ close }) => {
             }}
             className={style.chatRobot}
           >
-            <div className={style.side}></div>
+            <div className={style.side}>
+              <div className={style.newChat}>
+                <Button
+                  type="primary"
+                  style={{ width: "200px", backgroundColor: "#359eff" }}
+                  onClick={() => {
+                    setMessages([]);
+                    setInputMessage("");
+                    if (messages.length !== 0) {
+                      setAllChatHistory((prev) => {
+                        if (prev.includes(messages)) {
+                          return [...prev];
+                        } else {
+                          localStorage.setItem(
+                            "allChatHistory",
+                            JSON.stringify([...prev, messages])
+                          );
+                          return [...prev, messages];
+                        }
+                      });
+                    }
+                  }}
+                >
+                  + 新建对话
+                </Button>
+              </div>
+              <div className={style.chatRecord}>
+                {allChatHistory.map((item, index) => {
+                  if (item.length === 0) return null;
+                  return (
+                    <div
+                      className={style.chatItem}
+                      style={{
+                        backgroundColor:
+                          index === selectedHistory ? "#eff6ff" : "",
+                      }}
+                      onClick={() => {
+                        setSelectedHistory(index);
+                        setMessages([]);
+                        setMessages(allChatHistory[index] || []);
+                      }}
+                    >
+                      <div className={style.recordInfo}>
+                        <Tooltip title={item[0].content}>
+                          {item[0].content}
+                        </Tooltip>
+                      </div>
+                      <div
+                        className={style.delete}
+                        onClick={() => {
+                          setAllChatHistory((prev) => {
+                            return prev.splice(index, 1);
+                          });
+                        }}
+                      >
+                        <Tooltip title="删除记录">
+                          <DeleteOutlined />
+                        </Tooltip>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
             <div className={style.body}>
               <div className={`${style.header} drag-handle`}>
                 <span>当前会话记录</span>
