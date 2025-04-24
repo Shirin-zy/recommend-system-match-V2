@@ -1,4 +1,4 @@
-import style from "./item.less";
+import style from "./Item.less";
 import { Tooltip, message } from "antd";
 import { HeartFilled } from "@ant-design/icons";
 import { useState } from "react";
@@ -36,7 +36,7 @@ interface ContestInfo {
 // 确保 props 包含 collectionInfo
 interface CollectionItemProps {
   collectionInfo: ContestInfo;
-  changeCollection?: (email: string, contestId: string) => void;
+  changeCollection: (email: string, contestId: string) => void;
 }
 
 // 将时间戳转化为当前月份和日期
@@ -79,14 +79,14 @@ const CollectionItem: React.FC<CollectionItemProps> = ({
   const [color, setColor] = useState("#ff0605"); // 收藏按钮颜色
   const [tips, setTips] = useState("取消收藏");
   const labelInfo = getContestStatus(collectionInfo);
-  // useEffect(() => {
-  //   // 初始化颜色
-  //   setColor(
-  //     App.state.collections.includes(String(collectionInfo.ID))
-  //       ? "#ff0605"
-  //       : "#a2a2a2"
-  //   );
-  // }, []);
+  useEffect(() => {
+    // 初始化颜色
+    setColor(
+      App.state.collections.includes(String(collectionInfo.ID))
+        ? "#ff0605"
+        : "#a2a2a2"
+    );
+  }, []);
   return (
     <>
       <div className={style.item}>

@@ -14,6 +14,7 @@ from  dealData.addID import addId
 from dealData.insertMatchInfoToDatabase import store_data_to_mysql
 from service.uerCountService import handle_login,handle_register,getAllAccount,updateUserAccount,deleteAccount,searchAccount
 from service.userInfoService import handle_getUserInfo,handle_editUserInfo,collectedMatch
+from service.recommendService import getRecoomendItem
 import os
 from openai import OpenAI
 from flask_cors import CORS  # 安装：pip install flask-cors
@@ -189,7 +190,6 @@ def robotReply():
         }
     }
     context = request.json.get('context')
-    print(context)
     client = OpenAI(api_key="sk-2eb407036ec44a85b7d7c2913ad64290", base_url="https://api.deepseek.com")
 
     response = client.chat.completions.create(
@@ -199,10 +199,15 @@ def robotReply():
         messages=context,
         stream=False
     )
-    print(response.choices[0].message.content)
     data['data']['context'] = response.choices[0].message.content
 
     return jsonify(data)
+
+# 获取推荐的比赛
+@app.route('/api/recommend/items',methods=['get'])
+def getRecommendItem():
+    email = request.args.get('email',type='str')
+    return jsonify(getRecoomendItem(email,top_n=8))
 
 if __name__ == '__main__':
     app.run(debug=True,port=8444)

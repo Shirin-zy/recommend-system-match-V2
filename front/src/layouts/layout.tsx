@@ -5,6 +5,9 @@ import {
   DownOutlined,
   UpOutlined,
   RobotFilled,
+  UserOutlined,
+  SafetyCertificateOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
 import { observer } from "mobx-react-lite";
@@ -26,6 +29,12 @@ const LoginOut = () => {
   localStorage.removeItem("collections");
   history.push("/login");
   App.clearState();
+};
+
+const role = {
+  common: "普通用户",
+  admin: "管理员",
+  root: "超级管理员",
 };
 
 const Layout = () => {
@@ -63,17 +72,42 @@ const Layout = () => {
         <div
           className={`${styles.detail} ${showUserInfo ? styles.show : styles.hidden}`}
         >
-          <div>当前账号：{App.state.email}</div>
-          <div>
-            <Button
-              onClick={() => {
-                const token = decodeToken(App.state.token);
-                console.log(token);
+          <div className={styles.header}>
+            <div
+              style={{
+                width: 30,
+                height: 30,
+                borderRadius: 15,
+                backgroundColor: "#dbeafe",
+                display: "inline-block",
+                textAlign: "center",
+                lineHeight: "30px",
+                marginRight: 10,
               }}
             >
-              测试
-            </Button>
-            <Button onClick={LoginOut}>退出登录</Button>
+              <UserOutlined style={{ color: "#359eff" }} />
+            </div>
+            当前账号：{App.state.email}
+          </div>
+          <div className={styles.body}>
+            <div className={styles.nick}>
+              <UserOutlined
+                style={{ color: "#a2a2a2", fontSize: 16, marginRight: 10 }}
+              />
+              昵称：{App.state.username}
+            </div>
+            <div className={styles.role}>
+              <SafetyCertificateOutlined
+                style={{ color: "#a2a2a2", fontSize: 16, marginRight: 10 }}
+              />
+              角色：{role[App.state.role]}
+            </div>
+            <div className={styles.loginOut}>
+              <Button danger size="small" onClick={LoginOut}>
+                <LogoutOutlined />
+                退出登录
+              </Button>
+            </div>
           </div>
         </div>
       </nav>

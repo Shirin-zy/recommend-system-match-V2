@@ -101,7 +101,7 @@ def handle_getUserInfo(email):
 
     return  data
 
-# 收藏的比赛
+# 收藏比赛
 def collectedMatch(id,email):
     engine = create_engine('mysql+pymysql://root:zy15730850419@localhost/match_recommend_system')  # 替换为你的数据库连接字符串
 

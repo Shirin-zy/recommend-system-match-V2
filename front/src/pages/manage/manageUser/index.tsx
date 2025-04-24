@@ -91,92 +91,96 @@ const MangeUser: React.FC = () => {
 
   return (
     <>
-      <div className={style.pageHeader}>
-        <div className={style.title}>用户账号管理</div>
-        <div className={style.add}>
-          <Button
-            type="primary"
-            size="large"
-            style={{ backgroundColor: "#359eff" }}
-            onClick={() => {
-              setIsAddModalOpen(true);
-            }}
-          >
-            <PlusCircleOutlined />
-            新增
-          </Button>
+      <div className={style.body}>
+        <div className={style.pageHeader}>
+          <div className={style.title}>用户账号管理</div>
+          <div className={style.add}>
+            <Button
+              type="primary"
+              size="large"
+              style={{ backgroundColor: "#359eff" }}
+              onClick={() => {
+                setIsAddModalOpen(true);
+              }}
+            >
+              <PlusCircleOutlined />
+              新增
+            </Button>
+          </div>
         </div>
+        <Table
+          userList={allUser}
+          setNeedUpdate={setNeedUpdate}
+          searchKey={searchKey}
+          setSearchKey={setSearchKey}
+          totalData={totalData}
+          setPage={setPage}
+        />
+        {/* 管理员直接创建用户 */}
+        <Modal
+          width={400}
+          centered
+          title="创建用户"
+          okText="创建"
+          cancelText="取消"
+          open={isAddModalOpen}
+          onOk={createUser}
+          onCancel={() => {
+            setIsAddModalOpen(false);
+          }}
+        >
+          <div className={style.editInfo}>
+            <div>
+              <span>用户名</span>
+              <Input
+                status={errors.username ? "error" : ""}
+                value={userInfo.username}
+                onChange={(e) => {
+                  setUserInfo({ ...userInfo, username: e.target.value });
+                  setErrors((prev) => ({ ...prev, username: "" }));
+                }}
+              />
+              {errors.username && (
+                <div style={{ color: "red" }}>{errors.username}</div>
+              )}
+            </div>
+
+            <div>
+              <span>邮箱</span>
+              <Input
+                status={errors.email ? "error" : ""}
+                value={userInfo.email}
+                onChange={(e) => {
+                  setUserInfo({ ...userInfo, email: e.target.value });
+                  setErrors((prev) => ({ ...prev, email: "" }));
+                }}
+              />
+              {errors.email && (
+                <div style={{ color: "red" }}>{errors.email}</div>
+              )}
+            </div>
+
+            <div>
+              <span>角色</span>
+              <Select
+                status={errors.role ? "error" : ""}
+                value={userInfo.role}
+                onChange={(e) => {
+                  setUserInfo({ ...userInfo, role: e });
+                  setErrors((prev) => ({ ...prev, role: "" }));
+                }}
+                options={[
+                  { value: "admin", label: "管理员" },
+                  { value: "common", label: "普通用户" },
+                  { value: "root", label: "超级管理员" },
+                ]}
+                style={{ width: "100%" }}
+              />
+              {errors.role && <div style={{ color: "red" }}>{errors.role}</div>}
+            </div>
+          </div>
+        </Modal>
       </div>
-      <Table
-        userList={allUser}
-        setNeedUpdate={setNeedUpdate}
-        searchKey={searchKey}
-        setSearchKey={setSearchKey}
-        totalData={totalData}
-        setPage={setPage}
-      />
-      {/* 管理员直接创建用户 */}
-      <Modal
-        width={400}
-        centered
-        title="创建用户"
-        okText="创建"
-        cancelText="取消"
-        open={isAddModalOpen}
-        onOk={createUser}
-        onCancel={() => {
-          setIsAddModalOpen(false);
-        }}
-      >
-        <div className={style.editInfo}>
-          <div>
-            <span>用户名</span>
-            <Input
-              status={errors.username ? "error" : ""}
-              value={userInfo.username}
-              onChange={(e) => {
-                setUserInfo({ ...userInfo, username: e.target.value });
-                setErrors((prev) => ({ ...prev, username: "" }));
-              }}
-            />
-            {errors.username && (
-              <div style={{ color: "red" }}>{errors.username}</div>
-            )}
-          </div>
-
-          <div>
-            <span>邮箱</span>
-            <Input
-              status={errors.email ? "error" : ""}
-              value={userInfo.email}
-              onChange={(e) => {
-                setUserInfo({ ...userInfo, email: e.target.value });
-                setErrors((prev) => ({ ...prev, email: "" }));
-              }}
-            />
-            {errors.email && <div style={{ color: "red" }}>{errors.email}</div>}
-          </div>
-
-          <div>
-            <span>角色</span>
-            <Select
-              status={errors.role ? "error" : ""}
-              value={userInfo.role}
-              onChange={(e) => {
-                setUserInfo({ ...userInfo, role: e });
-                setErrors((prev) => ({ ...prev, role: "" }));
-              }}
-              options={[
-                { value: "admin", label: "管理员" },
-                { value: "common", label: "普通用户" },
-                { value: "root", label: "超级管理员" },
-              ]}
-              style={{ width: "100%" }}
-            />
-            {errors.role && <div style={{ color: "red" }}>{errors.role}</div>}
-          </div>
-        </div>
-      </Modal>
     </>
   );
 };

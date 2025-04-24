@@ -8,28 +8,29 @@ import SyncCard from "./component/syncCard";
 import SystemInfo from "./component/systemInfo";
 import { Typography, Row, Col, Divider } from "antd";
 import { CheckCircleOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import styles from "./index.less";
 
 const { Title, Text } = Typography;
-const styles = {
-  container: {
-    minHeight: "85vh",
-    backgroundColor: "#f5f5f5",
-  },
-  content: {
-    maxWidth: "1440px",
-    margin: "0 auto",
-    padding: "48px 16px",
-  },
-  header: {
-    marginBottom: "32px",
-  },
-  headerFlex: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "24px",
-  },
-};
+// const styles = {
+//   container: {
+//     minHeight: "85vh",
+//     backgroundColor: "#f5f5f5",
+//   },
+//   content: {
+//     maxWidth: "1440px",
+//     margin: "0 auto",
+//     padding: "48px 16px",
+//   },
+//   header: {
+//     marginBottom: "32px",
+//   },
+//   headerFlex: {
+//     display: "flex",
+//     justifyContent: "space-between",
+//     alignItems: "center",
+//     marginBottom: "24px",
+//   },
+// };
 
 const SystemMange: React.FC = () => {
   const [initModalVisible, setInitModalVisible] = useState(false); // 初始化弹窗可见状态
@@ -119,72 +120,76 @@ const SystemMange: React.FC = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.content}>
-        <div style={styles.header}>
-          <div style={styles.headerFlex}>
-            <div>
-              <Title level={2} style={{ marginBottom: "4px" }}>
-                系统管理中心
-              </Title>
-              <Text type="secondary">今日日期: {currentDate}</Text>
+    <>
+      <div className={styles.body}>
+        <div className={styles.container}>
+          <div className={styles.content}>
+            <div className={styles.header}>
+              <div className={styles.headerFlex}>
+                <div>
+                  <Title level={2} style={{ marginBottom: "4px" }}>
+                    系统管理中心
+                  </Title>
+                  <Text type="secondary">今日日期: {currentDate}</Text>
+                </div>
+                <div>{renderStatusBadge()}</div>
+              </div>
+              <Divider style={{ margin: "24px 0" }} />
             </div>
-            <div>{renderStatusBadge()}</div>
-          </div>
-          <Divider style={{ margin: "24px 0" }} />
-        </div>
 
-        <Row gutter={[24, 24]}>
-          <Col xs={24} lg={16}>
-            <div style={{ marginBottom: "24px" }}>
-              <Title level={4} style={{ marginBottom: "16px" }}>
-                系统操作
-              </Title>
-              <Row gutter={[24, 24]}>
-                {/* 初始化卡片 */}
-                <Col xs={24} md={12}>
-                  <InitCard
-                    systemStatus={systemStatus}
-                    setSystemStatus={setSystemStatus}
-                    initModalVisible={initModalVisible}
-                    setInitModalVisible={setInitModalVisible}
-                    initStatus={initStatus}
-                    setInitStatus={setInitStatus}
-                  />
-                </Col>
-                {/* 数据同步卡片 */}
-                <Col xs={24} md={12}>
-                  <SyncCard
-                    syncHistory={syncHistory}
-                    setSyncHistory={setSyncHistory}
-                    lastSyncTime={lastSyncTime}
-                    setLastSyncTime={setLastSyncTime}
-                    syncProgress={syncProgress}
-                    setSyncProgress={setSyncProgress}
-                    syncStatus={syncStatus}
-                    setSyncStatus={setSyncStatus}
-                    syncModalVisible={syncModalVisible}
-                    setSyncModalVisible={setSyncModalVisible}
-                    systemStatus={systemStatus}
-                  />
-                </Col>
-              </Row>
-            </div>
-            {/* 系统状态卡片 */}
-            <SystemState
-              lastSyncTime={lastSyncTime}
-              systemStatus={systemStatus}
-              currentDate={currentDate}
-            />
-          </Col>
-          {/* 同步历史卡片 */}
-          <Col xs={24} lg={8}>
-            <SyncHistory syncHistory={syncHistory} />
-          </Col>
-        </Row>
-        <SystemInfo />
+            <Row gutter={[24, 24]}>
+              <Col xs={24} lg={16}>
+                <div style={{ marginBottom: "24px" }}>
+                  <Title level={4} style={{ marginBottom: "16px" }}>
+                    系统操作
+                  </Title>
+                  <Row gutter={[24, 24]}>
+                    {/* 初始化卡片 */}
+                    <Col xs={24} md={12}>
+                      <InitCard
+                        systemStatus={systemStatus}
+                        setSystemStatus={setSystemStatus}
+                        initModalVisible={initModalVisible}
+                        setInitModalVisible={setInitModalVisible}
+                        initStatus={initStatus}
+                        setInitStatus={setInitStatus}
+                      />
+                    </Col>
+                    {/* 数据同步卡片 */}
+                    <Col xs={24} md={12}>
+                      <SyncCard
+                        syncHistory={syncHistory}
+                        setSyncHistory={setSyncHistory}
+                        lastSyncTime={lastSyncTime}
+                        setLastSyncTime={setLastSyncTime}
+                        syncProgress={syncProgress}
+                        setSyncProgress={setSyncProgress}
+                        syncStatus={syncStatus}
+                        setSyncStatus={setSyncStatus}
+                        syncModalVisible={syncModalVisible}
+                        setSyncModalVisible={setSyncModalVisible}
+                        systemStatus={systemStatus}
+                      />
+                    </Col>
+                  </Row>
+                </div>
+                {/* 系统状态卡片 */}
+                <SystemState
+                  lastSyncTime={lastSyncTime}
+                  systemStatus={systemStatus}
+                  currentDate={currentDate}
+                />
+              </Col>
+              {/* 同步历史卡片 */}
+              <Col xs={24} lg={8}>
+                <SyncHistory syncHistory={syncHistory} />
+              </Col>
+            </Row>
+            <SystemInfo />
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

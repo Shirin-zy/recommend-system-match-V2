@@ -1,0 +1,244 @@
+/* 背景装饰容器 */
+.decorativeBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+  background-color: #ebf7ff;
+  /* 添加伪元素实现顶部渐变效果 */
+  &::before {
+    content: ""; /* 必须设置 content 属性 */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; /* 渐变的高度，可以根据需要调整 */
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 1),
+      rgba(255, 255, 255, 0)
+    ); /* 从白色到透明的渐变 */
+    pointer-events: none; /* 确保伪元素不影响交互 */
+    z-index: 1; /* 确保伪元素在背景之上 */
+  }
+}
+
+/* 顶部波浪 */
+.waveTop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.waveTop svg {
+  width: 100%;
+  height: auto;
+}
+
+/* 底部波浪 */
+.waveBottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.waveBottom svg {
+  width: 100%;
+  height: auto;
+}
+
+/* 右侧圆形 */
+.circleRight {
+  position: absolute;
+  top: 25%;
+  right: 0;
+  width: 64px;
+  height: 64px;
+  background-color: #d1eaff;
+  border-radius: 50%;
+  margin-right: -32px;
+  z-index: 0;
+}
+
+/* 左侧圆形 */
+.circleLeft {
+  position: absolute;
+  bottom: 25%;
+  left: 180px;
+  width: 80px;
+  height: 80px;
+  background-color: #d1eaff;
+  border-radius: 50%;
+  margin-left: -40px;
+  z-index: 0;
+}
+
+/* 浮动圆点 */
+.floatingDot {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.2;
+  animation: pulse 3s infinite;
+}
+
+.dot1 {
+  position: absolute;
+  top: 33%;
+  left: 25%;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #d1eaff;
+}
+
+.dot2 {
+  position: absolute;
+  top: 66%;
+  right: 25%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #d1eaff;
+  animation-delay: 1s;
+}
+
+.dot3 {
+  position: absolute;
+  top: 50%;
+  left: 33%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #d1eaff;
+  animation-delay: 1.5s;
+}
+
+.dot4 {
+  position: absolute;
+  bottom: 33%;
+  right: 33%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #d1eaff;
+  animation-delay: 0.5s;
+}
+
+.dot5 {
+  position: absolute;
+  bottom: 33%;
+  right: 75%;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #d1eaff;
+  animation-delay: 0.5s;
+}
+
+.dot6 {
+  position: absolute;
+  top:33%;
+  right: 33%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #d1eaff;
+  animation-delay: 0.5s;
+}
+
+.dot7 {
+  position: absolute;
+  top: 60%;
+  right: 10%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #d1eaff;
+  animation-delay: 0.5s;
+}
+
+.dot8 {
+  position: absolute;
+  bottom: 70%;
+  right: 20%;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #d1eaff;
+  animation-delay: 0.5s;
+}
+
+/* 背景点阵图案 */
+.dotPattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.05;
+  background-image: radial-gradient(circle, #9333ea 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* 角落装饰 */
+.cornerDecoration {
+  position: absolute;
+  opacity: 0.1;
+  z-index: 0;
+}
+
+.topRight {
+  position: absolute;
+  top: 40px;
+  right: 50px;
+  z-index: 0;
+}
+
+.bottomLeft {
+  position: absolute;
+  bottom: 100px;
+  left: 220px;
+  z-index: 0;
+}
+
+/* 动画 */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.2;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.float {
+  animation: float 6s ease-in-out infinite;
+}

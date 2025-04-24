@@ -158,45 +158,47 @@ const Collection = () => {
   }, [sortKey]);
   return (
     <>
-      <h2
-        onClick={() => {
-          console.log("筛选条件：", filterKey);
-        }}
-      >
-        我的收藏
-      </h2>
-      <span className={style.subtitle}>查看您收藏的所有比赛</span>
-      <div className={style.header}>
-        <div className={style.filter}>
-          <Segmented
-            options={["全部", "报名中", "即将开始", "进行中", "已结束"]}
-            onChange={(value) => {
-              setFilterKey(value);
-            }}
-          />
+      <div className={style.body}>
+        <h2
+          onClick={() => {
+            console.log("筛选条件：", filterKey);
+          }}
+        >
+          我的收藏
+        </h2>
+        <span className={style.subtitle}>查看您收藏的所有比赛</span>
+        <div className={style.header}>
+          <div className={style.filter}>
+            <Segmented
+              options={["全部", "报名中", "即将开始", "进行中", "已结束"]}
+              onChange={(value) => {
+                setFilterKey(value);
+              }}
+            />
+          </div>
+          <div className={style.sort}>
+            <span>排序方式：</span>
+            <Select
+              defaultValue={"registryEnd"}
+              options={[
+                { value: "registryEnd", label: "报名截止日期" },
+                { value: "MatchStart", label: "比赛开始日期" },
+              ]}
+              onChange={(value) => {
+                setSortKey(value);
+              }}
+            />
+          </div>
         </div>
-        <div className={style.sort}>
-          <span>排序方式：</span>
-          <Select
-            defaultValue={"registryEnd"}
-            options={[
-              { value: "registryEnd", label: "报名截止日期" },
-              { value: "MatchStart", label: "比赛开始日期" },
-            ]}
-            onChange={(value) => {
-              setSortKey(value);
-            }}
-          />
+        <div className={style.collection}>
+          {collectionData.map((item) => (
+            <CollectionItem
+              key={item.ID}
+              collectionInfo={item}
+              changeCollection={changeCollection}
+            />
+          ))}
         </div>
-      </div>
-      <div className={style.collection}>
-        {collectionData.map((item) => (
-          <CollectionItem
-            key={item.ID}
-            collectionInfo={item}
-            changeCollection={changeCollection}
-          />
-        ))}
       </div>
     </>
   );

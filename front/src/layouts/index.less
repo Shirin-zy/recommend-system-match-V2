@@ -39,18 +39,39 @@
     transition:
       transform 0.4s ease-in-out,
       opacity 0.4s ease-in-out; // 添加过渡效果
-    div:nth-child(1) {
+    .header {
+      display: flex;
       height: 50px;
       background-color: #fafafa;
       border: 0.5px solid #e4e5e6;
-      padding: 0 24px;
+      padding: 0 5px;
       line-height: 50px;
       font-size: 16px;
       color: #999999;
+      align-items: center;
     }
-    div:nth-child(2) {
+    .body {
       height: 100px;
       background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      padding: 0 20px;
+      .nick {
+        flex: 1;
+        font-size: 15px;
+        font-weight: 350;
+        line-height: 33.3px;
+      }
+      .role {
+        flex: 1;
+        font-size: 15px;
+        font-weight: 350;
+        line-height: 33.3px;
+      }
+      .loginOut {
+        flex: 1;
+        line-height: 33.3px;
+      }
     }
     &.hidden {
       // 隐藏状态下的样式
@@ -85,7 +106,7 @@
     justify-content: space-between;
     .content {
       flex: 1;
-      padding: 20px;
+      // padding: 20px;
       overflow-y: auto;
       scrollbar-width: thin;
       scrollbar-color: #eaeaea transparent;

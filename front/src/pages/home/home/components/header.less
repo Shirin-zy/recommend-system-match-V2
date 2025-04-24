@@ -1,0 +1,53 @@
+.headerContent {
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .titleDecoration {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #359eff, transparent);
+  }
+  .pageTitle {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 8px;
+  }
+  .pageSubtitle {
+    font-size: 16px;
+    color: #6b7280;
+    margin-bottom: 16px;
+  }
+  .titleDots {
+    display: flex;
+    gap: 4px;
+    margin-top: 16px;
+    .dot {
+      display: block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .dot1 {
+      background-color: #bfdbfe;
+    }
+    .dot2 {
+      background-color: #93c5fd;
+    }
+    .dot3 {
+      background-color: #60a5fa;
+    }
+    .dot4 {
+      background-color: #3b82f6;
+    }
+    .dot5 {
+      background-color: #2563eb;
+    }
+  }
+}
